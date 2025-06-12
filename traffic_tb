@@ -1,0 +1,41 @@
+module tb11;
+// Inputs
+reg X;
+reg clock;
+reg clear;
+
+// Outputs
+wire [1:0] hwy;
+wire [1:0] cntry;
+
+// Instantiate the Unit Under Test (UUT)
+traffic uut (
+    .hwy(hwy),
+    .cntry(cntry),
+    .X(X),
+    .clock(clock),
+    .clear(clear)
+);
+
+// Clock generation
+always #50 clock = ~clock;
+
+initial begin
+    // Initialize Inputs
+    X = 0;
+    clock = 1;
+    clear = 1;
+
+    // Wait 100 ns for global reset to finish
+    #100;
+    clear = 0;
+    X = 1;
+    #200;
+    X = 0;
+    #200;
+    X = 1;
+    #200;
+    X = 0;
+end
+
+endmodule
